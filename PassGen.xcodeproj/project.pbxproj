@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		440831501E3808EE00A421F8 /* PassGenInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */; };
+		441FD4FA1E3853FD003FF609 /* PassGenPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441FD4F91E3853FD003FF609 /* PassGenPopoverVC.swift */; };
 		447ECBC41E38224600789D8C /* PassGenOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447ECBC31E38224600789D8C /* PassGenOptionsViewController.swift */; };
-		447ECBC81E382A6500789D8C /* PassGenPopoverPresCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447ECBC71E382A6500789D8C /* PassGenPopoverPresCont.swift */; };
 		44FF91091E37F09600AC355C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FF91081E37F09600AC355C /* AppDelegate.swift */; };
 		44FF910B1E37F09600AC355C /* PassGenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FF910A1E37F09600AC355C /* PassGenViewController.swift */; };
 		44FF910E1E37F09600AC355C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44FF910C1E37F09600AC355C /* Main.storyboard */; };
@@ -21,8 +21,8 @@
 
 /* Begin PBXFileReference section */
 		4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenInitialViewController.swift; sourceTree = "<group>"; };
+		441FD4F91E3853FD003FF609 /* PassGenPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenPopoverVC.swift; sourceTree = "<group>"; };
 		447ECBC31E38224600789D8C /* PassGenOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenOptionsViewController.swift; sourceTree = "<group>"; };
-		447ECBC71E382A6500789D8C /* PassGenPopoverPresCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenPopoverPresCont.swift; sourceTree = "<group>"; };
 		44FF91051E37F09600AC355C /* PassGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PassGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44FF91081E37F09600AC355C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44FF910A1E37F09600AC355C /* PassGenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassGenViewController.swift; sourceTree = "<group>"; };
@@ -65,12 +65,12 @@
 			isa = PBXGroup;
 			children = (
 				44FF91081E37F09600AC355C /* AppDelegate.swift */,
+				4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */,
+				44FF911C1E38060F00AC355C /* PassGenTableViewController.swift */,
+				44FF911A1E3805EF00AC355C /* PassGenTableViewCell.swift */,
 				44FF910A1E37F09600AC355C /* PassGenViewController.swift */,
 				447ECBC31E38224600789D8C /* PassGenOptionsViewController.swift */,
-				4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */,
-				44FF911A1E3805EF00AC355C /* PassGenTableViewCell.swift */,
-				44FF911C1E38060F00AC355C /* PassGenTableViewController.swift */,
-				447ECBC71E382A6500789D8C /* PassGenPopoverPresCont.swift */,
+				441FD4F91E3853FD003FF609 /* PassGenPopoverVC.swift */,
 				44FF910C1E37F09600AC355C /* Main.storyboard */,
 				44FF910F1E37F09600AC355C /* Assets.xcassets */,
 				44FF91111E37F09600AC355C /* LaunchScreen.storyboard */,
@@ -152,7 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				447ECBC81E382A6500789D8C /* PassGenPopoverPresCont.swift in Sources */,
+				441FD4FA1E3853FD003FF609 /* PassGenPopoverVC.swift in Sources */,
 				44FF910B1E37F09600AC355C /* PassGenViewController.swift in Sources */,
 				447ECBC41E38224600789D8C /* PassGenOptionsViewController.swift in Sources */,
 				44FF91091E37F09600AC355C /* AppDelegate.swift in Sources */,
