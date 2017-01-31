@@ -10,6 +10,7 @@
 		440831501E3808EE00A421F8 /* PassGenInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */; };
 		441FD4FA1E3853FD003FF609 /* PassGenPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441FD4F91E3853FD003FF609 /* PassGenPopoverVC.swift */; };
 		447ECBC41E38224600789D8C /* PassGenOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447ECBC31E38224600789D8C /* PassGenOptionsViewController.swift */; };
+		44EEA5981E4069D000861B3C /* PassGenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EEA5971E4069D000861B3C /* PassGenUtils.swift */; };
 		44FF91091E37F09600AC355C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FF91081E37F09600AC355C /* AppDelegate.swift */; };
 		44FF910B1E37F09600AC355C /* PassGenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FF910A1E37F09600AC355C /* PassGenViewController.swift */; };
 		44FF910E1E37F09600AC355C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44FF910C1E37F09600AC355C /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenInitialViewController.swift; sourceTree = "<group>"; };
 		441FD4F91E3853FD003FF609 /* PassGenPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenPopoverVC.swift; sourceTree = "<group>"; };
 		447ECBC31E38224600789D8C /* PassGenOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenOptionsViewController.swift; sourceTree = "<group>"; };
+		44EEA5971E4069D000861B3C /* PassGenUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGenUtils.swift; sourceTree = "<group>"; };
 		44FF91051E37F09600AC355C /* PassGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PassGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44FF91081E37F09600AC355C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44FF910A1E37F09600AC355C /* PassGenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassGenViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			children = (
 				44FF91081E37F09600AC355C /* AppDelegate.swift */,
 				4408314F1E3808EE00A421F8 /* PassGenInitialViewController.swift */,
+				44EEA5971E4069D000861B3C /* PassGenUtils.swift */,
 				44FF911C1E38060F00AC355C /* PassGenTableViewController.swift */,
 				44FF911A1E3805EF00AC355C /* PassGenTableViewCell.swift */,
 				44FF910A1E37F09600AC355C /* PassGenViewController.swift */,
@@ -159,6 +162,7 @@
 				440831501E3808EE00A421F8 /* PassGenInitialViewController.swift in Sources */,
 				44FF911D1E38060F00AC355C /* PassGenTableViewController.swift in Sources */,
 				44FF911B1E3805EF00AC355C /* PassGenTableViewCell.swift in Sources */,
+				44EEA5981E4069D000861B3C /* PassGenUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

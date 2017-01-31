@@ -10,6 +10,8 @@ import UIKit
 
 class PassGenViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 	
+	var valu = [Int]();
+	
     @IBAction func btn_Edit(_ sender: Any) {
     }
 	@IBAction func btn_Save(_ sender: Any) {
@@ -28,6 +30,10 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
+		if !valu.isEmpty && valu.count == 4 {
+			txtVw_Password.text = "\(valu[0]) + \(valu[1]) + \(valu[2]) + \(valu[3])"
+			
+		}
 		
 	}
 
@@ -42,12 +48,19 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "optionsPopover" {
-			if let controller = segue.destination as? UIViewController {
+			if let controller = segue.destination as? PassGenPopoverVC {
 				controller.popoverPresentationController!.delegate = self
 				controller.preferredContentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.height)
+				
 			}
 		}
 	}
+
+	@IBAction func unwindToPassGenVC(segue: UIStoryboardSegue) {
+		viewDidLoad();
+	}
+	
+	
 
 }
 
