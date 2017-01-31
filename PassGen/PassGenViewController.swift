@@ -7,20 +7,38 @@
 //
 
 import UIKit
+import os.log
 
-class PassGenViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class PassGenViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
 	
+	var entry: PassGenEntry?;
 	var valu = [Int]();
 	
-    @IBAction func btn_Edit(_ sender: Any) {
-    }
-	@IBAction func btn_Save(_ sender: Any) {
-	}
+	@IBOutlet weak var txtFld_Name: UITextField!
+	
+	@IBOutlet weak var btn_Save: UIBarButtonItem!
+
 	@IBOutlet var txtVw_Password: UITextView!
 
 	@IBOutlet var prgVw_Progress: UIProgressView!
 	
 	@IBAction func btn_Options(_ sender: UIButton) {
+		
+	}
+	
+	private func updateSaveButtonState() -> Void {
+		
+		let text = txtFld_Name.text ?? ""
+		btn_Save.isEnabled = !text.isEmpty;
+	}
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		updateSaveButtonState();
+		navigationItem.title = textField.text;
+	}
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		btn_Save.isEnabled = false;
 		
 	}
 	
@@ -30,16 +48,32 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
-		if !valu.isEmpty && valu.count == 4 {
-			txtVw_Password.text = "\(valu[0]) + \(valu[1]) + \(valu[2]) + \(valu[3])"
-			
+		
+		txtFld_Name.delegate = self;
+		
+		updateSaveButtonState();
+
+		
+		if let entry = entry {
+			navigationItem.title = entry.getName();
+			txtFld_Name.text = entry.getName();
+			txtVw_Password.text = entry.getPass();
 		}
+		
+		
+//		if !valu.isEmpty && valu.count == 4 {
+//			txtVw_Password.text = "\(valu[0]) + \(valu[1]) + \(valu[2]) + \(valu[3])"
+//			
+//		}
 		
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+		
+		
+		
 	}
 
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -47,6 +81,18 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		
+		guard let button = sender as? UIBarButtonItem, button === btn_Save else {
+			os_log("Save button not pressed", log: OSLog.default, type: .debug);
+			return
+		}
+		
+		let name = txtFld_Name.text ?? "";
+		let password = txtVw_Password.text ?? "password not created";
+		let accessed = "today"
+		
+		entry = PassGenEntry(name: name, password: password, accessed: accessed)
+		
 		if segue.identifier == "optionsPopover" {
 			if let controller = segue.destination as? PassGenPopoverVC {
 				controller.popoverPresentationController!.delegate = self
@@ -60,7 +106,7 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 		viewDidLoad();
 	}
 	
-	
+
 
 }
 

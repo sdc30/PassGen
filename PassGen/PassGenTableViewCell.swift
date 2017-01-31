@@ -9,7 +9,11 @@
 import UIKit
 
 class PassGenTableViewCell: UITableViewCell {
-
+	
+	@IBOutlet weak var lbl_Name: UILabel!
+	@IBOutlet weak var lbl_Accessed: UILabel!
+	
+	
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
