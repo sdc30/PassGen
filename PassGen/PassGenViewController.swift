@@ -39,17 +39,6 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 	
 	}
 	
-//	func gnp(sender: Any?) {
-//		guard let button = sender as? UIBarButtonItem, button === btn_GenNewPass else {
-//			os_log("GNP not pressed", log: OSLog.default, type: .debug);
-//			return
-//		}
-//		
-//			let pgu = PassGenUtils(args: valu);
-//			pgu?.runnable();
-//		
-//	}
-	
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		updateSaveButtonState();
 		navigationItem.title = textField.text;
@@ -85,11 +74,6 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 			txtVw_Password.text = entry.getPass();
 		}
 		
-		
-//		if !valu.isEmpty && valu.count == 4 {
-//			txtVw_Password.text = "\(valu[0]) + \(valu[1]) + \(valu[2]) + \(valu[3])"
-//			
-//		}
 		
 	}
 
@@ -132,17 +116,14 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 						return
 					}
 
-					if(greenlight) {
-						os_log("GNP pressed", log: OSLog.default, type: .debug);
-						let pgu = PassGenUtils(args: valu);
-						pgu?.runnable();
+					if greenlight {
+						controller.valu = self.valu;
+						controller.shouldPerformSegue(withIdentifier: segue.identifier!, sender: sender)
 					}
-					
-					controller.shouldPerformSegue(withIdentifier: segue.identifier!, sender: sender)
 				}
 				
 			case "unwindToPassList":
-				os_log("Unwinded to Pass List", log: OSLog.default, type: .debug);
+				os_log("Unwinded to Pass List from pgvc", log: OSLog.default, type: .debug);
 				
 
 				guard let button = sender as? UIBarButtonItem, button === btn_Save else {

@@ -14,15 +14,20 @@ class PassGenPopoverVC: UIViewController {
 	
 	
 	
+	@IBOutlet weak var lbl_ReqLen: UILabel!
 	@IBOutlet weak var lbl_UpperCase: UILabel!
 	@IBOutlet weak var lbl_LowerCase: UILabel!
 	@IBOutlet weak var lbl_DigitCase: UILabel!
 	@IBOutlet weak var lbl_SpecialCase: UILabel!
+	@IBOutlet weak var txtFld_RL: UITextField!
 	@IBOutlet weak var txtFld_LC: UITextField!
 	@IBOutlet weak var txtFld_UC: UITextField!
 	@IBOutlet weak var txtFld_DC: UITextField!
 	@IBOutlet weak var txtFld_SC: UITextField!
 
+	@IBAction func stpr_RL(_ sender: Any) {
+		txtFld_RL.text = Int((sender as! UIStepper).value).description;
+	}
 	@IBAction func stpr_LC(_ sender: Any) {
 		txtFld_LC.text = Int((sender as! UIStepper).value).description;
 	}
@@ -71,6 +76,13 @@ class PassGenPopoverVC: UIViewController {
 		
 		if txtFld_SC.text != "" {
 			valu.append(Int(txtFld_SC.text!)!);
+			//print(txtFld_SC.text!);
+		} else {
+			valu.append(0);
+		}
+		
+		if txtFld_RL.text != "" {
+			valu.append(Int(txtFld_RL.text!)!);
 			//print(txtFld_SC.text!);
 		} else {
 			valu.append(0);
