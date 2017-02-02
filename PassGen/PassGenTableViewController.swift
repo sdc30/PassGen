@@ -16,24 +16,23 @@ class PassGenTableViewController: UITableViewController {
 	let segueId: String = "showEntry";
 	
 	//MARK: Properties
-	
 	var entries = [PassGenEntry]();
 	
 	
 	//MARK: Private Methods
-	
 	private func loadEntries() -> [PassGenEntry]? {
 		return NSKeyedUnarchiver.unarchiveObject(withFile: PassGenEntry.ArchiveURL.path) as? [PassGenEntry];
 	}
 
 	private func saveEntries() -> Void {
+		
 		let success = NSKeyedArchiver.archiveRootObject(entries, toFile: PassGenEntry.ArchiveURL.path);
 		
 		if success {
 			os_log("Entries successfully saved.", log: OSLog.default, type: .debug)
 
 		} else {
-			os_log("Entires unsuccessful.", log: OSLog.default, type: .error)
+			os_log("Entires save unsuccessful.", log: OSLog.default, type: .error)
 
 		}
 	}
@@ -144,29 +143,29 @@ class PassGenTableViewController: UITableViewController {
 		
 		
 		switch segue.identifier ?? "" {
-		case "addEntry":
-			os_log("Adding entry", log: OSLog.default, type: .debug);
-		case "editEntry":
-			os_log("Editing entry", log: OSLog.default, type: .debug);
-		case "showEntry":
-			guard let pgvc = segue.destination as? PassGenViewController else {
-				fatalError("Error: Unexpected destination (\(segue.destination))");
-			}
-			
-			guard let selectedPassGenTableViewCell = sender as? PassGenTableViewCell else {
-				fatalError("Error: Unexpected sender: (\(sender))");
-			}
-			
-			guard let indexPath = tableView.indexPath(for: selectedPassGenTableViewCell) else {
-				fatalError("Error: Selected cell is not being displayed for table");
-			}
-			
-			let selectedEntry = entries[indexPath.row]
-			pgvc.entry = selectedEntry;
-			
-		default:
-			//os_log("Error: Unexpected entry", log: OSLog.default, type: .debug);
-			fatalError("Error: Unexpected sender: (\(segue.identifier))");
+			case "addEntry":
+				os_log("Adding entry", log: OSLog.default, type: .debug);
+			case "editEntry":
+				os_log("Editing entry", log: OSLog.default, type: .debug);
+			case "showEntry":
+				guard let pgvc = segue.destination as? PassGenViewController else {
+					fatalError("Error: Unexpected destination (\(segue.destination))");
+				}
+				
+				guard let selectedPassGenTableViewCell = sender as? PassGenTableViewCell else {
+					fatalError("Error: Unexpected sender: (\(sender))");
+				}
+				
+				guard let indexPath = tableView.indexPath(for: selectedPassGenTableViewCell) else {
+					fatalError("Error: Selected cell is not being displayed for table");
+				}
+				
+				let selectedEntry = entries[indexPath.row]
+				pgvc.entry = selectedEntry;
+				
+			default:
+				//os_log("Error: Unexpected entry", log: OSLog.default, type: .debug);
+				fatalError("Error: Unexpected sender: (\(segue.identifier))");
 
 
 		}
