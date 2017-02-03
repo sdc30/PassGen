@@ -175,7 +175,14 @@ class GNPViewController: UIViewController {
 				}
 				
 				if greenlight {
-					controller.txtVw_Password.text = self.fin;
+					
+					
+					let name = controller.txtFld_Name.text ?? "";
+					let password = self.fin;
+					let accessed = Date().description(with: Locale.current);
+					
+					controller.entry = PassGenEntry(name: name, password: password, accessed: accessed)
+
 				}
 			}
 			

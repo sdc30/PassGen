@@ -46,7 +46,7 @@ class PassGenUtils {
 			tot += args[index];
 		}
 		
-		print("[init] totalLen \(tot), low \(args[0]), up \(args[1]), dig \(args[2]), spec \(args[3])");
+		//print("[init] totalLen \(tot), low \(args[0]), up \(args[1]), dig \(args[2]), spec \(args[3])");
 
 		
 		guard args[4] >= tot else {
@@ -63,7 +63,7 @@ class PassGenUtils {
 		
 		self.lenNeeded = self.passLen - self.totalLen;
 		
-		print("passLen \(self.passLen), lenNeeded \(self.lenNeeded)");
+		//print("passLen \(self.passLen), lenNeeded \(self.lenNeeded)");
 		
 		self.tempPass = [Character]();
 		self.password = [Character]();
@@ -85,8 +85,8 @@ class PassGenUtils {
 		}
 		
 		
-		print("lenNeeded \(self.lenNeeded)");
-		print("[init] totalLen \(self.passLen), needlow \(self.needLower), needup \(self.needUpper), needdig \(self.needDigit), needspec \(self.needSpecial)");
+		//print("lenNeeded \(self.lenNeeded)");
+		//print("[init] totalLen \(self.passLen), needlow \(self.needLower), needup \(self.needUpper), needdig \(self.needDigit), needspec \(self.needSpecial)");
 
 		
 	}
@@ -109,8 +109,8 @@ class PassGenUtils {
 			
 			genPass();
 			self.totalLen = self.needLower + self.needUpper + self.needDigit + self.needSpecial;
-			os_log("mainLoop sleeping...", log: OSLog.default, type: .debug);
-			print("Progress: \(self.progress)");
+			// os_log("mainLoop sleeping...", log: OSLog.default, type: .debug);
+			//print("Progress: \(self.progress)");
 			let nc = NotificationCenter.default;
 			nc.post(name: NSNotification.Name(rawValue: "progressNotification"), object: nil, userInfo: ["progress": String(self.getProgress())])
 			// sleep(3);
@@ -157,8 +157,8 @@ class PassGenUtils {
 		self.lenNeeded = n
 		
 		self.totalLen = self.needLower + self.needUpper + self.needDigit + self.needSpecial;
-		print("totalLen fix'd \(self.totalLen)");
-		print("[fix'd] totalLen \(self.totalLen), needlow \(self.needLower), needup \(self.needUpper), needdig \(self.needDigit), needspec \(self.needSpecial)");
+		//print("totalLen fix'd \(self.totalLen)");
+		//print("[fix'd] totalLen \(self.totalLen), needlow \(self.needLower), needup \(self.needUpper), needdig \(self.needDigit), needspec \(self.needSpecial)");
 
 		
 	}
@@ -169,7 +169,7 @@ class PassGenUtils {
 		let tot = Int(100 * (Float(i) / Float(self.passLen)));
 		self.progress = tot;
 		
-		print("progress \(tot), passLen \(self.passLen), lowcount \(self.lowerCount), upcount \(self.upperCount), digcount \(self.digitCount), speccount \(self.specialCount)");
+		//print("progress \(tot), passLen \(self.passLen), lowcount \(self.lowerCount), upcount \(self.upperCount), digcount \(self.digitCount), speccount \(self.specialCount)");
 
 		
 		return tot;

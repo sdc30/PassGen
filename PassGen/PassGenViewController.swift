@@ -155,7 +155,7 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 				
 				let name = txtFld_Name.text ?? "";
 				let password = txtVw_Password.text ?? "password not created";
-				let accessed = Date().description;
+				let accessed = Date().description(with: Locale.current);
 				
 				entry = PassGenEntry(name: name, password: password, accessed: accessed)
 
