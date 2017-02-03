@@ -13,6 +13,7 @@ class GNPViewController: UIViewController {
 
 	var valu: [Int] = [Int]();
 	var fin: String = "";
+	var prog: Int = 0;
 	
 	
 	@IBOutlet weak var lbl_Working: UILabel!
@@ -45,88 +46,92 @@ class GNPViewController: UIViewController {
 				return
 		}
 		
-		progVw_Working.setProgress(Float(progress)!, animated: true);
+		self.prog = Int(progress)!;
+		
+		progVw_Working.setProgress(Float(progress)!, animated: false);
 	}
 	
-	private func runnable(delay: Double = 0.0, background: @escaping () -> (), completion: @escaping (PassGenUtils) -> (), arg: PassGenUtils) -> Void {
+	private func catchPassword(notif: Notification) -> Void {
+		guard let user = notif.userInfo
+			, let password = user["password"] as? String
+			else {
+				print("No notificaitons");
+				return
+		}
+//		print("done");
+//		print("password " + password);
 		
-//		DispatchQueue.global(qos: .background).async {
-//			os_log("Background queue running.", log: OSLog.default, type: .debug)
-//			
-//			if background != nil {
-//				background!;
-//			}
-//		}
-
-
+		self.fin = password;
 		
 		
-//		let dlt = DispatchTime.now() + delay;
-//		DispatchQueue.main.asyncAfter(deadline: dlt, execute: {
-//			
-//			os_log("Main queue running.", log: OSLog.default, type: .debug)
-//			
-//			if completion != nil {
-//				completion!;
-//			}
-//
-//		})
-		
+		if !self.fin.isEmpty {
+			DispatchQueue.global(qos: .background).async {
+				DispatchQueue.main.async {
+					self.updateDoneButton();
+					self.updateAIV();
+				}
+			}
+		}
+	
+	}
+	
+//	private func runnable(delay: Double = 0.0, background: @escaping () -> (), completion: @escaping (PassGenUtils) -> (), arg: PassGenUtils) -> Void {
+	private func runnable(delay: Double = 0.0, background: @escaping () -> ()) -> Void {
 		
 		DispatchQueue.global(qos: .background).async {
 			os_log("Background queue running.", log: OSLog.default, type: .debug)
 			
-			
 				background();
-		
-			let dlt = DispatchTime.now() + delay;
-			
-			DispatchQueue.main.asyncAfter(deadline: dlt, execute: {
-				
-				os_log("Main queue running.", log: OSLog.default, type: .debug)
-				
-				
-				completion(arg);
-				
-			});
-			
+				// completion(arg);
 		}
+		
+//		let dlt = DispatchTime.now() + delay;
+		
+		
+//		DispatchQueue.main.asyncAfter(deadline: dlt, execute: {
+//			
+//			os_log("Main queue running.", log: OSLog.default, type: .debug)
+//			
+//			
+//			
+//			
+//		});
+
 	
 
 		
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-
-		let pgu: PassGenUtils = PassGenUtils(args: valu)!;
-		
-		self.runnable(delay: 0, background: pgu.mainLoop, completion: self.upd, arg: pgu);
-
-		
-		updateDoneButton();
-		updateAIV();
-		
-		
-	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		os_log("GNP pressed, GNPVC loaded", log: OSLog.default, type: .debug);
+
 		progVw_Working.setProgress(0, animated: true);
-		// Do any additional setup after loading the view.
-		let notif = Notification.Name(rawValue: "progressNotification");
-		
-		
-		let nc = NotificationCenter.default;
-		nc.addObserver(forName: notif, object: nil, queue: nil, using: catchProgress);
 		
 		updateDoneButton();
 		updateAIV();
+		
 		
 		guard !valu.isEmpty else {
 			fatalError("Error valu is empty in GNPVC");
 		}
 		
-		os_log("GNP pressed, GNPVC loaded", log: OSLog.default, type: .debug);
+		let pgu: PassGenUtils = PassGenUtils(args: valu)!;
+		
+		// self.runnable(delay: 0, background: pgu.mainLoop, completion: self.upd, arg: pgu);
+		self.runnable(delay: 0.0, background: pgu.mainLoop)
+		let progNotif = Notification.Name(rawValue: "progressNotification");
+		let passNotif = Notification.Name(rawValue: "passwordNotification");
+		
+		
+		let ncProg = NotificationCenter.default;
+		ncProg.addObserver(forName: progNotif, object: nil, queue: nil, using: catchProgress);
+		
+		let ncPass = NotificationCenter.default;
+		ncPass.addObserver(forName: passNotif, object: nil, queue: nil, using: catchPassword);
+
 	
 
     }
@@ -135,22 +140,6 @@ class GNPViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-	
-	private func upd(pgu: PassGenUtils) -> Void {
-		repeat {
-			
-			self.fin = (pgu.getFinalPassword());
-			
-			print(self.fin)
-			
-			updateDoneButton();
-			updateAIV();
-			
-			//sleep(1);
-			
-		} while (fin.isEmpty);
-		
-	}
 
 	
     // MARK: - Navigation

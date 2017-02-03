@@ -33,12 +33,18 @@ class PassGenUtils {
 	
 	private var tempPass: [Character], password: [Character];
 	
+	private let MAXPASSLEN: Int = 50001;
+	
 	init?(args: [Int]) {
 		os_log("PGU init called.", log: OSLog.default, type: .debug);
 		
 		
 		guard args.count == 5 else {
 			fatalError("Error: PGU args.count expected 5, got \(args.count)");
+		}
+		
+		guard args[4] < MAXPASSLEN else {
+			fatalError("Error: Max password length is 50k, got \(args[4])... tf you want with that anyway");
 		}
 		
 		var tot: Int = 0;
@@ -105,21 +111,32 @@ class PassGenUtils {
 	
 	func mainLoop() -> Void {
 		os_log("mainLoop running...", log: OSLog.default, type: .debug);
+		
 		repeat {
 			
 			genPass();
-			self.totalLen = self.needLower + self.needUpper + self.needDigit + self.needSpecial;
-			// os_log("mainLoop sleeping...", log: OSLog.default, type: .debug);
-			//print("Progress: \(self.progress)");
-			let nc = NotificationCenter.default;
-			nc.post(name: NSNotification.Name(rawValue: "progressNotification"), object: nil, userInfo: ["progress": String(self.getProgress())])
-			// sleep(3);
+			self.totalLen = self.lowerCount + self.upperCount + self.digitCount + self.specialCount;
 			
-			
-		} while(self.progress < 100);
+			if self.getProgress() % 10 == 0 {
+				DispatchQueue.global(qos: .background).async {
+					// sleep(3);
+					DispatchQueue.main.async {
+						let nc = NotificationCenter.default;
+						nc.post(name: NSNotification.Name(rawValue: "progressNotification"), object: nil, userInfo: ["progress": String(self.getProgress())])
+						// print("Progress: \(self.progress)");
+					}
+				}
+			}
+
+		} while(self.totalLen < self.passLen);
+
+		os_log("mainLoop done.", log: OSLog.default, type: .debug);
 		
 		self.setPass();
-		//return self.getFinalPassword();
+		
+		let nc = NotificationCenter.default;
+		nc.post(name: NSNotification.Name(rawValue: "passwordNotification"), object: nil, userInfo: ["password": self.getFinalPassword()])
+
 	}
 	
 	
