@@ -17,6 +17,7 @@ class GNPViewController: UIViewController {
 	
 	@IBOutlet weak var lbl_Working: UILabel!
 	@IBOutlet weak var aiv_Working: UIActivityIndicatorView!
+	@IBOutlet weak var progVw_Working: UIProgressView!
 	@IBOutlet weak var btn_Done: UIButton!
 
 	
@@ -36,7 +37,18 @@ class GNPViewController: UIViewController {
 		}
 	}
 	
-	private func runnable(delay: Double = 0.0, background: Void, completion: Void? = nil) -> Void {
+	private func catchProgress(notif: Notification) -> Void {
+		guard let user = notif.userInfo
+		, let progress = user["progress"] as? String
+			else {
+				print("No notificaitons");
+				return
+		}
+		
+		progVw_Working.setProgress(Float(progress)!, animated: true);
+	}
+	
+	private func runnable(delay: Double = 0.0, background: @escaping () -> (), completion: @escaping (PassGenUtils) -> (), arg: PassGenUtils) -> Void {
 		
 //		DispatchQueue.global(qos: .background).async {
 //			os_log("Background queue running.", log: OSLog.default, type: .debug)
@@ -59,6 +71,26 @@ class GNPViewController: UIViewController {
 //			}
 //
 //		})
+		
+		
+		DispatchQueue.global(qos: .background).async {
+			os_log("Background queue running.", log: OSLog.default, type: .debug)
+			
+			
+				background();
+		
+			let dlt = DispatchTime.now() + delay;
+			
+			DispatchQueue.main.asyncAfter(deadline: dlt, execute: {
+				
+				os_log("Main queue running.", log: OSLog.default, type: .debug)
+				
+				
+				completion(arg);
+				
+			});
+			
+		}
 	
 
 		
@@ -68,26 +100,8 @@ class GNPViewController: UIViewController {
 
 		let pgu: PassGenUtils = PassGenUtils(args: valu)!;
 		
-		// self.runnable(delay: 0, background: pgu.mainLoop(), completion: self.upd(pgu: pgu));
-		
-		
-			DispatchQueue.global(qos: .background).async {
-				os_log("Background queue running.", log: OSLog.default, type: .debug)
-				
-				pgu.mainLoop();
-				
-				let dlt = DispatchTime.now() + 5.0;
-				
-				DispatchQueue.main.asyncAfter(deadline: dlt, execute: {
-					
-					os_log("Main queue running.", log: OSLog.default, type: .debug)
-					
-					
-					self.upd(pgu: pgu);
-					
-				});
+		self.runnable(delay: 0, background: pgu.mainLoop, completion: self.upd, arg: pgu);
 
-			}
 		
 		updateDoneButton();
 		updateAIV();
@@ -97,7 +111,13 @@ class GNPViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		progVw_Working.setProgress(0, animated: true);
 		// Do any additional setup after loading the view.
+		let notif = Notification.Name(rawValue: "progressNotification");
+		
+		
+		let nc = NotificationCenter.default;
+		nc.addObserver(forName: notif, object: nil, queue: nil, using: catchProgress);
 		
 		updateDoneButton();
 		updateAIV();
@@ -126,7 +146,7 @@ class GNPViewController: UIViewController {
 			updateDoneButton();
 			updateAIV();
 			
-			sleep(1);
+			//sleep(1);
 			
 		} while (fin.isEmpty);
 		

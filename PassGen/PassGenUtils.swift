@@ -111,7 +111,8 @@ class PassGenUtils {
 			self.totalLen = self.needLower + self.needUpper + self.needDigit + self.needSpecial;
 			os_log("mainLoop sleeping...", log: OSLog.default, type: .debug);
 			print("Progress: \(self.progress)");
-
+			let nc = NotificationCenter.default;
+			nc.post(name: NSNotification.Name(rawValue: "progressNotification"), object: nil, userInfo: ["progress": String(self.getProgress())])
 			// sleep(3);
 			
 			

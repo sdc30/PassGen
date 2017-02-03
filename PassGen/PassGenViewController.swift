@@ -9,6 +9,24 @@
 import UIKit
 import os.log
 
+
+extension UIViewController {
+	
+	func hideKeyboard() {
+		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PassGenViewController.dismissAll));
+		
+		self.view.addGestureRecognizer(tap);
+	}
+	
+	
+	@objc private func dismissAll() -> Void {
+		
+		let view = self.view;
+		view?.endEditing(true);
+		
+	}
+}
+
 class PassGenViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UITabBarControllerDelegate {
 	
 	var entry: PassGenEntry?;
@@ -19,8 +37,6 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 	@IBOutlet weak var btn_Save: UIBarButtonItem!
 
 	@IBOutlet var txtVw_Password: UITextView!
-
-	@IBOutlet var prgVw_Progress: UIProgressView!
 	
 	@IBAction func btn_Options(_ sender: UIButton) {
 		
@@ -38,6 +54,9 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 		btn_GenNewPass.isEnabled = !e;
 	
 	}
+	
+
+	
 	
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		updateSaveButtonState();
@@ -63,10 +82,10 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 		// Do any additional setup after loading the view, typically from a nib.
 		
 		txtFld_Name.delegate = self;
-		
-		
+
 		updateSaveButtonState();
 		updateGNP();
+		self.hideKeyboard();
 		
 		if let entry = entry {
 			navigationItem.title = entry.getName();
@@ -136,7 +155,7 @@ class PassGenViewController: UIViewController, UIPopoverPresentationControllerDe
 				
 				let name = txtFld_Name.text ?? "";
 				let password = txtVw_Password.text ?? "password not created";
-				let accessed = "today"
+				let accessed = Date().description;
 				
 				entry = PassGenEntry(name: name, password: password, accessed: accessed)
 
